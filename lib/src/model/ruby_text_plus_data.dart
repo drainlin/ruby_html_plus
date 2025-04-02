@@ -1,0 +1,127 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ruby_text/ruby_text.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' show parse;
+
+import '../../ruby_text_plus.dart';
+
+class RubyTextPlusData {
+  /// Context
+  final BuildContext context;
+
+  /// original text with ruby
+  final String rubyText;
+
+  /// Whether to show ruby text
+  final bool shouldShowRubyText;
+
+  /// If [shouldShowRubyText] is false,
+  /// whether to remove spacing
+  /// instead of showing transparent text
+  final bool shouldTrimSpacingIfNotShowRubyText;
+
+  /// TextStyle for main text
+  final TextStyle? textStyle;
+
+  /// TextStyle for ruby text
+  final TextStyle? rubyTextStyle;
+
+  RubyTextPlusData(
+    this.rubyText, {
+    required this.context,
+    required this.shouldShowRubyText,
+    required this.textStyle,
+    required this.rubyTextStyle,
+    required this.shouldTrimSpacingIfNotShowRubyText,
+  });
+
+  TextStyle? get _textRubyTextStyle {
+    if (shouldShowRubyText) {
+      return rubyTextStyle;
+    } else {
+      if (rubyTextStyle != null) {
+        return rubyTextStyle!.copyWith(
+          color: Colors.transparent,
+          fontSize:
+              shouldTrimSpacingIfNotShowRubyText ? 0 : rubyTextStyle?.fontSize,
+        );
+      } else {
+        return DefaultTextStyle.of(context).style.copyWith(
+          color: Colors.transparent,
+          fontSize:
+              shouldTrimSpacingIfNotShowRubyText
+                  ? 0
+                  : DefaultTextStyle.of(context).style.fontSize,
+        );
+      }
+    }
+  }
+
+  List<RubyTextData> get splitRubyTextDataList {
+    List<RubyTextData> rubyTexts = [];
+
+    var document = parse(rubyText);
+    for (var node in document.body!.nodes) {
+      if (node.nodeType == dom.Node.TEXT_NODE) {
+        if (node.text != null && node.text!.isNotEmpty) {
+          // 纯文本的情况
+          // 对每个字进行分割
+          final splitText = node.text!.split('');
+
+          for (final String char in splitText) {
+            rubyTexts.add(
+              RubyTextData(
+                char,
+                ruby: ' ',
+                style: textStyle,
+                rubyStyle: _textRubyTextStyle,
+              ),
+            );
+          }
+        }
+      } else if (node.nodeType == dom.Node.ELEMENT_NODE) {
+        dom.Element element = node as dom.Element;
+        if (element.localName == 'ruby') {
+          var mainText = '';
+          var rubyText = '';
+          for (var subNode in element.nodes) {
+            if (subNode.nodeType == dom.Node.TEXT_NODE) {
+              mainText = subNode.text ?? '';
+            } else if (subNode.nodeType == dom.Node.ELEMENT_NODE) {
+              dom.Element element = subNode as dom.Element;
+              if (element.localName == 'rt') {
+                rubyText = element.text;
+              }
+            }
+
+            if (mainText.isNotEmpty && rubyText.isNotEmpty) {
+              // 同时存在主文本和注音文本的情况
+              rubyTexts.add(
+                RubyTextData(
+                  mainText,
+                  ruby: rubyText,
+                  style: textStyle,
+                  rubyStyle: _textRubyTextStyle,
+                ),
+              );
+
+              mainText = '';
+              rubyText = '';
+            }
+          }
+        }
+      }
+    }
+
+    return rubyTexts;
+  }
+
+  String get originalText {
+    String text = '';
+    for (var rubyText in splitRubyTextDataList) {
+      text += rubyText.text;
+    }
+    return text;
+  }
+}
