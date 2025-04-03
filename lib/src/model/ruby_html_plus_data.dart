@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
 
-import '../../ruby_html_plus.dart';
 import '../ruby_text/ruby_text_data.dart';
 
 class RubyHtmlPlusData {

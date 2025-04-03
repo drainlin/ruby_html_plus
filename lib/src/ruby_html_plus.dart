@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruby_html_plus/src/ruby_text/ruby_text.dart';
+import 'package:ruby_html_plus/src/tools/tool.dart';
 
 import 'model/ruby_html_plus_data.dart';
 
@@ -70,9 +71,6 @@ class RubyHtmlPlus extends StatelessWidget {
     /// Original text with ruby
     String html, {
 
-    /// The text without ruby markup
-    required String plainText,
-
     /// The text to be matched
     required String matchingText,
 
@@ -112,8 +110,8 @@ class RubyHtmlPlus extends StatelessWidget {
         textDataList.map((e) {
           return e.text;
         }).toList();
-    final List<String> matchingTextList = _splitJapaneseText(matchingText);
-    final list = _findMatchingIndices(
+    final List<String> matchingTextList = Tool.splitJapaneseText(matchingText);
+    final list = Tool.findMatchingIndices(
       plainTextList,
       matchingTextList,
       ignoreSymbol: ignoreSymbol,
@@ -210,76 +208,5 @@ class RubyHtmlPlus extends StatelessWidget {
     return RubyText(textDataList);
   }
 
-  static List<int> _findMatchingIndices(
-    List<String> correctList,
-    List<String> matchList, {
-    bool ignoreSymbol = true,
-  }) {
-    List<int> indices = [];
-    int correctListIndex = 0;
 
-    for (var i in matchList) {
-      for (int j = correctListIndex; j < correctList.length; j++) {
-        if (correctList[j] == i) {
-          indices.add(j);
-          correctListIndex = j + 1;
-          break;
-        } else if (!_isNotSymbol(correctList[j])) {
-          if (ignoreSymbol) {
-            indices.add(j);
-          }
-        }
-      }
-    }
-
-    indices = indices.toSet().toList();
-    indices.sort();
-
-    return indices;
-  }
-
-  /// This function checks if the character is not a symbol.
-  /// Special note: This function is used to Japanese and English.
-  static bool _isNotSymbol(String character) {
-    if (character.isEmpty) return false;
-    final int code = character.codeUnitAt(0);
-
-    return (code >= 0x3040 && code <= 0x309F) ||
-        (code >= 0x30A0 && code <= 0x30FF) ||
-        (code >= 0x4E00 && code <= 0x9FFF) ||
-        (code >= 0x3400 && code <= 0x4DBF) ||
-        (code >= 0x0041 && code <= 0x005A) ||
-        (code >= 0x0061 && code <= 0x007A);
-  }
-
-  /// Special note: This function is used to Japanese.
-  static List<String> _splitJapaneseText(String text) {
-    final List<String> result = [];
-    final StringBuffer kanjiBuffer = StringBuffer();
-
-    bool isKanji(int code) =>
-        (code >= 0x4E00 && code <= 0x9FFF) ||
-        (code >= 0x3400 && code <= 0x4DBF);
-
-    for (int i = 0; i < text.length; i++) {
-      String char = text[i];
-      int code = char.codeUnitAt(0);
-
-      if (isKanji(code)) {
-        kanjiBuffer.write(char);
-      } else {
-        if (kanjiBuffer.isNotEmpty) {
-          result.add(kanjiBuffer.toString());
-          kanjiBuffer.clear();
-        }
-        result.add(char);
-      }
-    }
-
-    if (kanjiBuffer.isNotEmpty) {
-      result.add(kanjiBuffer.toString());
-    }
-
-    return result;
-  }
 }

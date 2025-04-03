@@ -7,7 +7,7 @@ import 'package:tuple/tuple.dart';
 import 'ruby_text_data.dart';
 
 class RubySpanWidget extends HookWidget {
-  const RubySpanWidget(this.data, {Key? key}) : super(key: key);
+  const RubySpanWidget(this.data, {super.key});
 
   final RubyTextData data;
 
@@ -131,7 +131,7 @@ class RubySpanWidget extends HookWidget {
 class RubyText extends StatelessWidget {
   const RubyText(
     this.data, {
-    Key? key,
+    super.key,
     this.spacing = 0.0,
     this.style,
     this.rubyStyle,
@@ -140,7 +140,7 @@ class RubyText extends StatelessWidget {
     this.softWrap,
     this.overflow,
     this.maxLines,
-  }) : super(key: key);
+  });
 
   final List<RubyTextData> data;
   final double spacing;

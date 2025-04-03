@@ -23,9 +23,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(title: Text("RubyTextPlus Example")),
         body: Center(child: _buildBody()),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {});
-          },
+          onPressed: () {},
           child: Icon(Icons.play_arrow),
         ),
       ),
