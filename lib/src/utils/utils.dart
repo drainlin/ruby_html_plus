@@ -1,4 +1,4 @@
-class Tool {
+class Utils {
   static List<int> findMatchingIndices(
     List<String> correctList,
     List<String> matchList, {

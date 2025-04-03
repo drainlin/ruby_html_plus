@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ruby_html_plus/src/ruby_text/ruby_text.dart';
-import 'package:ruby_html_plus/src/tools/tool.dart';
+import 'package:ruby_html_plus/src/utils/utils.dart';
 
 import 'model/ruby_html_plus_data.dart';
 
@@ -110,8 +110,8 @@ class RubyHtmlPlus extends StatelessWidget {
         textDataList.map((e) {
           return e.text;
         }).toList();
-    final List<String> matchingTextList = Tool.splitJapaneseText(matchingText);
-    final list = Tool.findMatchingIndices(
+    final List<String> matchingTextList = Utils.splitJapaneseText(matchingText);
+    final list = Utils.findMatchingIndices(
       plainTextList,
       matchingTextList,
       ignoreSymbol: ignoreSymbol,
@@ -207,6 +207,4 @@ class RubyHtmlPlus extends StatelessWidget {
 
     return RubyText(textDataList);
   }
-
-
 }
