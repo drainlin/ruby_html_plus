@@ -179,15 +179,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  ruby_text:
-    dependency: transitive
-    description:
-      name: ruby_text
-      sha256: c9fe49dfe703c240f2ef8274d75c33654ec893685fa7180fd0dcdaf32b850511
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
-  ruby_text_plus:
+  ruby_html_plus:
     dependency: "direct dev"
     description:
       path: ".."

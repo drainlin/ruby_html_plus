@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:ruby_text/ruby_text.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' show parse;
 
-import '../../ruby_text_plus.dart';
+import '../../ruby_html_plus.dart';
+import '../ruby_text/ruby_text_data.dart';
 
-class RubyTextPlusData {
-  /// Context
+class RubyHtmlPlusData {
+  /// Context for getting default text style
   final BuildContext context;
 
   /// original text with ruby
@@ -27,7 +26,7 @@ class RubyTextPlusData {
   /// TextStyle for ruby text
   final TextStyle? rubyTextStyle;
 
-  RubyTextPlusData(
+  RubyHtmlPlusData(
     this.rubyText, {
     required this.context,
     required this.shouldShowRubyText,

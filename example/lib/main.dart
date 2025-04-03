@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ruby_text_plus/ruby_text_plus.dart';
+import 'package:ruby_html_plus/ruby_html_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +13,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var isShowOverlay = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -38,14 +40,30 @@ class _MyAppState extends State<MyApp> {
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       width: 350,
-      child: RubyTextPlus.highlightMatchingText(
-        '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
-        plainText: '昨日は雨だったのに、今日は晴れです。',
-        matchingText: 'のに今日は晴れです',
-        shouldShowRubyText: true,
-        rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
-        textStyle: TextStyle(fontSize: 20, color: Colors.black),
-        context: context,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            isShowOverlay = !isShowOverlay;
+          });
+        },
+        child:
+            isShowOverlay
+                ? RubyHtmlPlus.overlay(
+                  '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+                  overlayIndex: [0, 1, 2, 3, 8, 9, 11, 14, 18],
+                  boldIndex: [1, 2, 3, 4, 5, 6, 7, 8],
+                  shouldShowRubyText: true,
+                  rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
+                  textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                  context: context,
+                )
+                : RubyHtmlPlus(
+                  '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+                  boldIndex: [1, 2, 3, 4, 5, 6, 7, 8],
+                  shouldShowRubyText: true,
+                  rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
+                  textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                ),
       ),
     );
   }

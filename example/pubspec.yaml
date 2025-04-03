@@ -38,7 +38,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  ruby_text_plus:
+  ruby_html_plus:
     path: ../
 
 

@@ -1,4 +1,4 @@
-name: ruby_text_plus
+name: ruby_html_plus
 description: "A new Flutter package for ruby text."
 version: 0.0.1
 homepage:
@@ -10,9 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  ruby_text: ^3.0.3
   get: ^4.7.2
   html: ^0.15.5
+  flutter_hooks: ^0.18.6
+  tuple: ^2.0.1
+  equatable: ^2.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter
