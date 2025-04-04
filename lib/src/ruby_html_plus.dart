@@ -37,7 +37,16 @@ class RubyHtmlPlus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dataList = _data(context).splitRubyTextDataList;
+    final dataList =
+        RubyHtmlPlusData(
+          html,
+          shouldShowRubyText: shouldShowRubyText,
+          context: context,
+          textStyle: textStyle,
+          rubyTextStyle: rubyTextStyle,
+          shouldTrimSpacingIfNotShowRubyText:
+              shouldTrimSpacingIfNotShowRubyText,
+        ).splitRubyTextDataList;
     for (int index in boldIndex) {
       int currentTextIndex = 0;
       for (var data in dataList) {
@@ -54,17 +63,6 @@ class RubyHtmlPlus extends StatelessWidget {
       }
     }
     return RubyText(dataList);
-  }
-
-  RubyHtmlPlusData _data(BuildContext context) {
-    return RubyHtmlPlusData(
-      html,
-      shouldShowRubyText: shouldShowRubyText,
-      context: context,
-      textStyle: textStyle,
-      rubyTextStyle: rubyTextStyle,
-      shouldTrimSpacingIfNotShowRubyText: shouldTrimSpacingIfNotShowRubyText,
-    );
   }
 
   static Widget highlightMatchingText(
