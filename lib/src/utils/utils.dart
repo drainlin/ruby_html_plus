@@ -72,4 +72,39 @@ class Utils {
 
     return result;
   }
+
+  ///
+  static List<int> findIndexWithSymbol(
+    String text,
+    String symbol, {
+    String ignoreSymbol = '',
+  }) {
+    assert(symbol != ignoreSymbol);
+    List<int> indices = [];
+    bool isInSymbol = false; // 标记是否在符号之间
+    int actualIndex = 0; // 用来记录去除符号后的字符的索引
+
+    for (int i = 0; i < text.length; i++) {
+      final char = text[i];
+
+      if (char == symbol) {
+        if (!isInSymbol) {
+          // 遇到开始符号，开始标记区间
+          isInSymbol = true;
+        } else {
+          // 遇到结束符号，结束符号区间
+          isInSymbol = false;
+        }
+      } else if (char != ignoreSymbol) {
+        // 如果当前字符不是忽略符号并且当前在符号区间内，记录索引
+        if (isInSymbol) {
+          indices.add(actualIndex);
+        }
+        actualIndex++; // 仅增加去除符号后的字符索引
+      }
+      // 如果是忽略的符号，跳过并不增加 actualIndex
+    }
+
+    return indices;
+  }
 }

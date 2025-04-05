@@ -205,4 +205,66 @@ class RubyHtmlPlus extends StatelessWidget {
 
     return RubyText(textDataList);
   }
+
+  static Widget overlayWithSymbol(
+    String htmlWithSymbol, {
+
+    /// The symbol to be used
+    String overlaySymbol = '#',
+
+    String boldSymbol = '%',
+
+    /// The context for getting default text style
+    required BuildContext context,
+
+    /// The color to highlight the matching text
+    Color overlayColor = Colors.grey,
+
+    /// Whether to ignore symbols in the plain text
+    bool shouldShowRubyText = true,
+
+    /// Whether to ignore symbols in the plain text
+    /// If [shouldShowRubyText] is false,
+    /// whether to remove spacing
+    bool shouldTrimSpacingIfNotShowRubyText = true,
+
+    /// TextStyle for main text
+    required TextStyle textStyle,
+
+    /// TextStyle for ruby text
+    required TextStyle rubyTextStyle,
+  }) {
+    final originalText =
+        RubyHtmlPlusData(
+          htmlWithSymbol,
+          shouldShowRubyText: shouldShowRubyText,
+          context: context,
+          textStyle: textStyle,
+          rubyTextStyle: rubyTextStyle,
+          shouldTrimSpacingIfNotShowRubyText:
+              shouldTrimSpacingIfNotShowRubyText,
+        ).originalText;
+    final List<int> overlayIndex = Utils.findIndexWithSymbol(
+      originalText,
+      overlaySymbol,
+      ignoreSymbol: boldSymbol,
+    );
+
+    final List<int> boldIndex = Utils.findIndexWithSymbol(
+      originalText,
+      boldSymbol,
+      ignoreSymbol: overlaySymbol,
+    );
+    return RubyHtmlPlus.overlay(
+      htmlWithSymbol.replaceAll(overlaySymbol, '').replaceAll(boldSymbol, ''),
+      context: context,
+      boldIndex: boldIndex,
+      overlayIndex: overlayIndex,
+      textStyle: textStyle,
+      rubyTextStyle: rubyTextStyle,
+      overlayColor: overlayColor,
+      shouldShowRubyText: shouldShowRubyText,
+      shouldTrimSpacingIfNotShowRubyText: shouldTrimSpacingIfNotShowRubyText,
+    );
+  }
 }

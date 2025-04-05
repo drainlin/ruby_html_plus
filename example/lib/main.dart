@@ -46,21 +46,19 @@ class _MyAppState extends State<MyApp> {
         },
         child:
             isShowOverlay
-                ? RubyHtmlPlus.overlay(
+                ? RubyHtmlPlus(
                   '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
-                  overlayIndex: [0, 1, 2, 3, 8, 9, 11, 14, 18],
-                  boldIndex: [1, 2, 3, 4, 5, 6, 7, 8],
+                  boldIndex: [1, 2, 3, 4, 5, 6, 7, 8, 13, 14],
+                  shouldShowRubyText: true,
+                  rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
+                  textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                )
+                : RubyHtmlPlus.overlayWithSymbol(
+                  '<ruby>#昨日<rt>きのう</rt></ruby>は<ruby>雨#<rt>あめ</rt></ruby>%だったのに、%<ruby>今日<rt>きょう</rt></ruby>は<ruby>%晴<rt>はれ</rt></ruby>で%す。',
                   shouldShowRubyText: true,
                   rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
                   textStyle: TextStyle(fontSize: 20, color: Colors.black),
                   context: context,
-                )
-                : RubyHtmlPlus(
-                  '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
-                  boldIndex: [1, 2, 3, 4, 5, 6, 7, 8],
-                  shouldShowRubyText: true,
-                  rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
-                  textStyle: TextStyle(fontSize: 20, color: Colors.black),
                 ),
       ),
     );

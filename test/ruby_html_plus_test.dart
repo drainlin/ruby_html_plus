@@ -74,4 +74,32 @@ void main() {
       equals([0, 2, 4]),
     );
   });
+
+  test('FindIndexWithSymbol', () {
+    expect(
+      Utils.findIndexWithSymbol('#昨日#は雨だったのに、今日は晴れです。', '#'),
+      equals([0, 1]),
+    );
+    expect(Utils.findIndexWithSymbol('昨日は雨だったのに、今日は晴れです。', '#'), equals([]));
+    expect(Utils.findIndexWithSymbol('昨日は#雨#だったのに、今日は晴れです。', '#'), equals([3]));
+    expect(Utils.findIndexWithSymbol('昨日は雨だったのに、今日は晴れです。#', '#'), equals([]));
+    expect(Utils.findIndexWithSymbol('#昨日', '#'), equals([0, 1]));
+    expect(Utils.findIndexWithSymbol('#昨##日', '#'), equals([0, 1]));
+    expect(Utils.findIndexWithSymbol('#昨##日#', '#'), equals([0, 1]));
+    expect(
+      Utils.findIndexWithSymbol('#昨日%#', '#', ignoreSymbol: '%'),
+      equals([0, 1]),
+    );
+    expect(
+      Utils.findIndexWithSymbol('#%#', '#', ignoreSymbol: '%'),
+      equals([]),
+    );
+    expect(Utils.findIndexWithSymbol('#', '#', ignoreSymbol: '%'), equals([]));
+    expect(Utils.findIndexWithSymbol('##', '#', ignoreSymbol: '%'), equals([]));
+    try {
+      Utils.findIndexWithSymbol('#昨日#', '#', ignoreSymbol: '#');
+    } catch (e) {
+      expect(e, isA<AssertionError>());
+    }
+  });
 }
