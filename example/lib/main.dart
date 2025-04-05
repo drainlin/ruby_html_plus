@@ -21,46 +21,168 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         backgroundColor: Colors.grey,
         appBar: AppBar(title: Text("RubyTextPlus Example")),
-        body: Center(child: _buildBody()),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.play_arrow),
+        body: Column(
+          children: [
+            _buildRubyHtml(),
+            _buildRubyHtmlWithoutRuby(),
+            _buildRubyHtmlWithSymbols(),
+            _buildRubyHtmlWithHighlight(),
+            _buildRubyHtmlOverlayWithIndex(),
+            _buildRubyHtmlBoldWithIndex(),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildBody() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      width: 350,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            isShowOverlay = !isShowOverlay;
-          });
-        },
-        child:
-            isShowOverlay
-                ? RubyHtmlPlus(
-                  '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
-                  boldIndex: [1, 2, 3, 4, 5, 6, 7, 8, 13, 14],
-                  shouldShowRubyText: true,
-                  rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
-                  textStyle: TextStyle(fontSize: 20, color: Colors.black),
-                )
-                : RubyHtmlPlus.overlayWithSymbol(
-                  '<ruby>#昨日<rt>きのう</rt></ruby>は<ruby>雨#<rt>あめ</rt></ruby>%だったのに、%<ruby>今日<rt>きょう</rt></ruby>は<ruby>%晴<rt>はれ</rt></ruby>で%す。',
-                  shouldShowRubyText: true,
-                  rubyTextStyle: TextStyle(fontSize: 11, color: Colors.grey),
-                  textStyle: TextStyle(fontSize: 20, color: Colors.black),
-                  context: context,
-                ),
-      ),
+  Widget _buildRubyHtml() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isShowOverlay = !isShowOverlay;
+                });
+              },
+              child:
+                  isShowOverlay
+                      ? RubyHtmlPlus.overlayWithSymbol(
+                        '<ruby>#昨日<rt>きのう</rt></ruby>は<ruby>雨#<rt>あめ</rt></ruby>%だったのに、%<ruby>今日<rt>きょう</rt></ruby>は<ruby>%晴<rt>はれ</rt></ruby>で%す。',
+                        shouldShowRubyText: true,
+                        context: context,
+                      )
+                      : RubyHtmlPlus(
+                        '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+                        boldIndex: [1, 2, 3, 4, 5, 6, 7, 8, 13, 14],
+                        shouldShowRubyText: true,
+                      ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlWithoutRuby() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              boldIndex: [1, 2, 3, 4, 5, 6, 7, 8, 13, 14],
+              shouldShowRubyText: false,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlWithSymbols() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus.overlayWithSymbol(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>#雨#<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              overlaySymbol: '#',
+              shouldShowRubyText: true,
+              context: context,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlWithHighlight() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus.highlightMatchingText(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              shouldShowRubyText: true,
+              context: context,
+              matchingText: '晴',
+              ignoreSymbol: false,
+              matchedColor: Colors.green,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlOverlayWithIndex() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus.overlay(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              shouldShowRubyText: true,
+              context: context,
+              overlayIndex: [0, 1, 8],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlBoldWithIndex() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              shouldShowRubyText: true,
+              boldIndex: [0, 1, 3, 10, 11, 13],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

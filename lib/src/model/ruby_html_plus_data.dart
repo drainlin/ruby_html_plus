@@ -63,8 +63,7 @@ class RubyHtmlPlusData {
     for (var node in document.body!.nodes) {
       if (node.nodeType == dom.Node.TEXT_NODE) {
         if (node.text != null && node.text!.isNotEmpty) {
-          // 纯文本的情况
-          // 对每个字进行分割
+          // plain text
           final splitText = node.text!.split('');
 
           for (final String char in splitText) {
@@ -94,7 +93,7 @@ class RubyHtmlPlusData {
             }
 
             if (mainText.isNotEmpty && rubyText.isNotEmpty) {
-              // 同时存在主文本和注音文本的情况
+              // main text and ruby text are not empty
               rubyTexts.add(
                 RubyTextData(
                   mainText,

@@ -25,13 +25,17 @@ class RubyHtmlPlus extends StatelessWidget {
   /// List of indices to be bold
   final List<int> boldIndex;
 
+  /// Bold font weight
+  final FontWeight fontWeight;
+
   const RubyHtmlPlus(
     this.html, {
     super.key,
     this.shouldShowRubyText = true,
     this.boldIndex = const [],
-    required this.textStyle,
-    required this.rubyTextStyle,
+    this.fontWeight = FontWeight.w600,
+    this.textStyle = const TextStyle(fontSize: 20),
+    this.rubyTextStyle = const TextStyle(fontSize: 11, color: Colors.grey),
     this.shouldTrimSpacingIfNotShowRubyText = true,
   });
 
@@ -56,7 +60,7 @@ class RubyHtmlPlus extends StatelessWidget {
 
         if (rangeLeft <= index && rangeRight > index) {
           dataList[dataList.indexOf(data)] = data.copyWith(
-            style: data.style?.copyWith(fontWeight: FontWeight.w600),
+            style: data.style?.copyWith(fontWeight: fontWeight),
           );
         }
         currentTextIndex = rangeRight;
@@ -90,10 +94,10 @@ class RubyHtmlPlus extends StatelessWidget {
     bool shouldTrimSpacingIfNotShowRubyText = true,
 
     /// TextStyle for main text
-    required TextStyle textStyle,
+    TextStyle textStyle = const TextStyle(fontSize: 20),
 
     /// TextStyle for ruby text
-    required TextStyle rubyTextStyle,
+    TextStyle rubyTextStyle = const TextStyle(fontSize: 11, color: Colors.grey),
   }) {
     final data = RubyHtmlPlusData(
       html,
@@ -134,6 +138,9 @@ class RubyHtmlPlus extends StatelessWidget {
     /// The text to be matched
     List<int> boldIndex = const [],
 
+    /// Bold font weight
+    FontWeight fontWeight = FontWeight.w600,
+
     /// The context for getting default text style
     required BuildContext context,
 
@@ -149,10 +156,10 @@ class RubyHtmlPlus extends StatelessWidget {
     bool shouldTrimSpacingIfNotShowRubyText = true,
 
     /// TextStyle for main text
-    required TextStyle textStyle,
+    TextStyle textStyle = const TextStyle(fontSize: 20, color: Colors.grey),
 
     /// TextStyle for ruby text
-    required TextStyle rubyTextStyle,
+    TextStyle rubyTextStyle = const TextStyle(fontSize: 11, color: Colors.grey),
   }) {
     final data = RubyHtmlPlusData(
       html,
@@ -196,7 +203,7 @@ class RubyHtmlPlus extends StatelessWidget {
 
         if (rangeLeft <= index && rangeRight > index) {
           textDataList[textDataList.indexOf(data)] = data.copyWith(
-            style: data.style?.copyWith(fontWeight: FontWeight.w600),
+            style: data.style?.copyWith(fontWeight: fontWeight),
           );
         }
         currentTextIndex = rangeRight;
@@ -229,10 +236,10 @@ class RubyHtmlPlus extends StatelessWidget {
     bool shouldTrimSpacingIfNotShowRubyText = true,
 
     /// TextStyle for main text
-    required TextStyle textStyle,
+    TextStyle textStyle = const TextStyle(fontSize: 20),
 
     /// TextStyle for ruby text
-    required TextStyle rubyTextStyle,
+    TextStyle rubyTextStyle = const TextStyle(fontSize: 11, color: Colors.grey),
   }) {
     final originalText =
         RubyHtmlPlusData(
