@@ -80,6 +80,7 @@ void main() {
       Utils.findIndexWithSymbol('#昨日#は雨だったのに、今日は晴れです。', '#'),
       equals([0, 1]),
     );
+
     expect(Utils.findIndexWithSymbol('昨日は雨だったのに、今日は晴れです。', '#'), equals([]));
     expect(Utils.findIndexWithSymbol('昨日は#雨#だったのに、今日は晴れです。', '#'), equals([3]));
     expect(Utils.findIndexWithSymbol('昨日は雨だったのに、今日は晴れです。#', '#'), equals([]));
@@ -101,5 +102,32 @@ void main() {
     } catch (e) {
       expect(e, isA<AssertionError>());
     }
+
+    expect(
+      Utils.findIndexWithSymbol(
+        '自分の#経験#について%話してもいいですか%。',
+        '#',
+        ignoreSymbol: '%',
+      ),
+      equals([3, 4]),
+    );
+
+    expect(
+      Utils.findIndexWithSymbol(
+        '自分の#経験#について%話してもいいですか%。',
+        '%',
+        ignoreSymbol: '#',
+      ),
+      equals([9, 10, 11, 12, 13, 14, 15, 16, 17]),
+    );
+
+    expect(
+      Utils.findIndexWithSymbol(
+        '自分の#経験#について%話してもいいですか%。',
+        '%',
+        ignoreSymbol: '',
+      ),
+      equals([11, 12, 13, 14, 15, 16, 17, 18, 19]),
+    );
   });
 }
