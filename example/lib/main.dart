@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         backgroundColor: Colors.grey,
         appBar: AppBar(title: Text("RubyTextPlus Example")),
-        body: Column(
+        body: ListView(
           children: [
             _buildRubyHtml(),
             _buildRubyHtmlWithoutRuby(),
@@ -29,6 +29,7 @@ class _MyAppState extends State<MyApp> {
             _buildRubyHtmlWithHighlight(),
             _buildRubyHtmlOverlayWithIndex(),
             _buildRubyHtmlBoldWithIndex(),
+            _buildRubyHtmlBoldWithSymbol(),
           ],
         ),
       ),
@@ -179,6 +180,30 @@ class _MyAppState extends State<MyApp> {
               '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
               shouldShowRubyText: true,
               boldIndex: [0, 1, 3, 10, 11, 13],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlBoldWithSymbol() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus.overlayWithSymbol(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>%だったのに、%<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              shouldShowRubyText: true,
+              boldSymbol: '%',
+              overlaySymbol: '',
+              context: context,
             ),
           ),
         ),
