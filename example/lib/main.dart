@@ -25,9 +25,9 @@ class _MyAppState extends State<MyApp> {
           children: [
             _buildRubyHtml(),
             _buildRubyHtmlWithoutRuby(),
-            _buildRubyHtmlWithSymbols(),
             _buildRubyHtmlWithHighlight(),
             _buildRubyHtmlOverlayWithIndex(),
+            _buildRubyHtmlOverlayWithSymbols(),
             _buildRubyHtmlBoldWithIndex(),
             _buildRubyHtmlBoldWithSymbol(),
           ],
@@ -94,7 +94,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Widget _buildRubyHtmlWithSymbols() {
+  Widget _buildRubyHtmlOverlayWithSymbols() {
     return Row(
       children: [
         Expanded(
