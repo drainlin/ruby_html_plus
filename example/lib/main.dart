@@ -30,6 +30,7 @@ class _MyAppState extends State<MyApp> {
             _buildRubyHtmlOverlayWithSymbols(),
             _buildRubyHtmlBoldWithIndex(),
             _buildRubyHtmlBoldWithSymbol(),
+            _buildRubyHtmlPlainTextWithSymbols(),
           ],
         ),
       ),
@@ -203,6 +204,32 @@ class _MyAppState extends State<MyApp> {
               shouldShowRubyText: true,
               boldSymbol: '%',
               overlaySymbol: '',
+              context: context,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRubyHtmlPlainTextWithSymbols() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: RubyHtmlPlus.overlayWithSymbol(
+              '<ruby>昨日<rt>きのう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>だったのに、<ruby>今日<rt>きょう</rt></ruby>は<ruby>晴<rt>はれ</rt></ruby>です。',
+              plainTextWithSymbol: "#昨日は雨#%だったのに%、今日は晴れです。",
+              shouldShowRubyText: true,
+              boldSymbol: '%',
+              overlaySymbol: '#',
+              boldFontWeight: FontWeight.w600,
               context: context,
             ),
           ),

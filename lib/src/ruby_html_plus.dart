@@ -26,14 +26,14 @@ class RubyHtmlPlus extends StatelessWidget {
   final List<int> boldIndex;
 
   /// Bold font weight
-  final FontWeight fontWeight;
+  final FontWeight boldFontWeight;
 
   const RubyHtmlPlus(
     this.html, {
     super.key,
     this.shouldShowRubyText = true,
     this.boldIndex = const [],
-    this.fontWeight = FontWeight.w600,
+    this.boldFontWeight = FontWeight.w600,
     this.textStyle = const TextStyle(fontSize: 20),
     this.rubyTextStyle = const TextStyle(fontSize: 11, color: Colors.grey),
     this.shouldTrimSpacingIfNotShowRubyText = true,
@@ -60,7 +60,7 @@ class RubyHtmlPlus extends StatelessWidget {
 
         if (rangeLeft <= index && rangeRight > index) {
           dataList[dataList.indexOf(data)] = data.copyWith(
-            style: data.style?.copyWith(fontWeight: fontWeight),
+            style: data.style?.copyWith(fontWeight: boldFontWeight),
           );
         }
         currentTextIndex = rangeRight;
@@ -139,7 +139,7 @@ class RubyHtmlPlus extends StatelessWidget {
     List<int> boldIndex = const [],
 
     /// Bold font weight
-    FontWeight fontWeight = FontWeight.w600,
+    FontWeight boldFontWeight = FontWeight.w600,
 
     /// The context for getting default text style
     required BuildContext context,
@@ -203,7 +203,7 @@ class RubyHtmlPlus extends StatelessWidget {
 
         if (rangeLeft <= index && rangeRight > index) {
           textDataList[textDataList.indexOf(data)] = data.copyWith(
-            style: data.style?.copyWith(fontWeight: fontWeight),
+            style: data.style?.copyWith(fontWeight: boldFontWeight),
           );
         }
         currentTextIndex = rangeRight;
@@ -216,10 +216,15 @@ class RubyHtmlPlus extends StatelessWidget {
   static Widget overlayWithSymbol(
     String htmlWithSymbol, {
 
+    /// Plain Text with symbols
+    String? plainTextWithSymbol,
+
     /// The symbol to be used
     String overlaySymbol = '#',
 
     String boldSymbol = '%',
+
+    FontWeight boldFontWeight = FontWeight.w600,
 
     /// The context for getting default text style
     required BuildContext context,
@@ -241,16 +246,22 @@ class RubyHtmlPlus extends StatelessWidget {
     /// TextStyle for ruby text
     TextStyle rubyTextStyle = const TextStyle(fontSize: 11, color: Colors.grey),
   }) {
-    final originalText =
-        RubyHtmlPlusData(
-          htmlWithSymbol,
-          shouldShowRubyText: shouldShowRubyText,
-          context: context,
-          textStyle: textStyle,
-          rubyTextStyle: rubyTextStyle,
-          shouldTrimSpacingIfNotShowRubyText:
-              shouldTrimSpacingIfNotShowRubyText,
-        ).originalText;
+    var originalText = '';
+    if (plainTextWithSymbol == null) {
+      originalText =
+          RubyHtmlPlusData(
+            htmlWithSymbol,
+            shouldShowRubyText: shouldShowRubyText,
+            context: context,
+            textStyle: textStyle,
+            rubyTextStyle: rubyTextStyle,
+            shouldTrimSpacingIfNotShowRubyText:
+                shouldTrimSpacingIfNotShowRubyText,
+          ).originalText;
+    } else {
+      originalText = plainTextWithSymbol;
+    }
+
     final List<int> overlayIndex = Utils.findIndexWithSymbol(
       originalText,
       overlaySymbol,
@@ -269,6 +280,7 @@ class RubyHtmlPlus extends StatelessWidget {
       overlayIndex: overlayIndex,
       textStyle: textStyle,
       rubyTextStyle: rubyTextStyle,
+      boldFontWeight: boldFontWeight,
       overlayColor: overlayColor,
       shouldShowRubyText: shouldShowRubyText,
       shouldTrimSpacingIfNotShowRubyText: shouldTrimSpacingIfNotShowRubyText,
