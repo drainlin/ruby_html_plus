@@ -1,6 +1,6 @@
 name: ruby_html_plus
 description: "A Flutter widget for customizable display of ruby annotation syntax (furigana)."
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/drainlin/ruby_html_plus
 
 environment:

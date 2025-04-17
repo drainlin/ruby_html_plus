@@ -23,7 +23,7 @@ Built on top of **Ruby_Html** and **Ruby Text**, it adds features such as:
 
 ## **📷**ScreenShots
 
-![image-20250417160803775](screenshot/screenshot.png)
+![ScreenShot](https://raw.githubusercontent.com/drainlin/ruby_html_plus/main/screenshot/screenshot.png)
 
 
 
@@ -35,7 +35,7 @@ Add dependency in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  ruby_html_plus: ^0.1.0
+  ruby_html_plus: ^0.1.1
 ```
 
 ## 🙏 Acknowledgements
